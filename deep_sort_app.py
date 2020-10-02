@@ -119,10 +119,10 @@ def create_detections(detection_mat, frame_idx, min_height=0):
 
     detection_list = []
     for row in detection_mat[mask]:
-        bbox, confidence, feature = row[2:6], row[6], row[10:]
+        bbox, confidence, objID, feature = row[2:6], row[6], row[7], row[10:]
         if bbox[3] < min_height:
             continue
-        detection_list.append(Detection(bbox, confidence, feature))
+        detection_list.append(Detection(bbox, confidence, objID, feature))
     return detection_list
 
 
@@ -196,7 +196,7 @@ def run(sequence_dir, detection_file, output_file, min_confidence,
                 continue
             bbox = track.to_tlwh()
             results.append([
-                frame_idx, track.track_id, bbox[0], bbox[1], bbox[2], bbox[3]])
+                frame_idx, track.track_id, bbox[0], bbox[1], bbox[2], bbox[3], track.obj_id])
 
     # Run tracker.
     if display:
@@ -208,8 +208,8 @@ def run(sequence_dir, detection_file, output_file, min_confidence,
     # Store results.
     f = open(output_file, 'w')
     for row in results:
-        print('%d,%d,%.2f,%.2f,%.2f,%.2f,1,-1,-1,-1' % (
-            row[0], row[1], row[2], row[3], row[4], row[5]),file=f)
+        print('%d,%d,%.2f,%.2f,%.2f,%.2f,%d,-1,-1,-1' % (
+            row[0], row[1], row[2], row[3], row[4], row[5], row[6]),file=f)
 
 
 def bool_string(input_string):
