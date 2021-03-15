@@ -1,0 +1,19 @@
+Sample dataset
+
+python deep_sort_app.py --sequence_dir .\MOT16\test\MOT16-06 --detection_file ./resources/detections/MOT16_POI_test/MOT16-06.npy --output_file MOT16-06.txt
+
+python generate_videos.py --mot_dir .\MOT16\test\ --result_dir .\ --output_dir .\
+
+
+
+Our dataset
+
+conda activate tf-gpu
+python tools\generate_detections.py --model=resources/networks/mars-small128.pb --mot_dir=.\bellevue --output_dir=./
+
+conda activate myenv
+python deep_sort_app.py --sequence_dir .\bellevue\ne8 --detection_file .\bellevue\ne8\det\ne8.npy --output_file ne8.txt
+
+python generate_videos.py --mot_dir .\bellevue --result_dir .\ --output_dir .\
+
+python fix_timestamp.py --input .\bellevue\ne8\det\ne8.txt --inputts .\bellevue\ne8\det\det.txt
