@@ -20,3 +20,18 @@ python generate_videos.py --mot_dir .\bellevue --result_dir .\bellevue\ne8\det -
 ~1200 frames/min
 
 python fix_timestamp.py --input .\bellevue\ne8\det\ne8.txt --inputts .\bellevue\ne8\det\det.txt
+
+
+
+AMA/Bellevue dataset
+
+conda activate tf-gpu
+python tools\generate_detections.py --model=resources/networks/mars-small128.pb --mot_dir=.\bellevue --output_dir=./
+
+conda activate myenv
+conda install -c conda-forge opencv
+$video = "B16__2020-10-09_11-59-36"; python deep_sort_app.py --sequence_dir ".\bellevue\$video" --detection_file ".\bellevue\$video\det\$video.npy" --output_file ".\bellevue\$video\det\$video.txt"
+
+python fix_timestamp.py --input_dir .\bellevue
+
+python .\foldercleaning.py --input_dir .\bellevue
